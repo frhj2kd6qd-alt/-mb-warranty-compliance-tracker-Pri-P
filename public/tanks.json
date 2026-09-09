@@ -1,0 +1,22 @@
+{
+  "tanks": [
+    {
+      "lid": "LID-01",
+      "label": "Hydraulic Fluid Bay A",
+      "color": "#00FF66",
+      "level": 85
+    },
+    {
+      "lid": "LID-02",
+      "label": "Coolant Reservoir Bay B",
+      "color": "#FFB300",
+      "level": 42
+    },
+    {
+      "lid": "LID-03",
+      "label": "Synthetic Oil Tank C",
+      "color": "#FF3333",
+      "level": 15
+    }
+  ]
+}

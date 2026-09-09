@@ -1,0 +1,6 @@
+{
+  "name": "ASP Mercedes Warranty Hub",
+  "description": "Mercedes-Benz dealership warranty audit, daily repair order reconciliation, fluid tank telemetry, and NetStar remittance recovery portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

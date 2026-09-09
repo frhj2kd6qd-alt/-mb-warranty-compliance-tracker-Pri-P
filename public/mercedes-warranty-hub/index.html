@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mercedes-Benz Warranty Operations Hub &amp; Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-cyan-500/30">
+
+  <!-- TOP STATUS / TELEMETRY TICKER -->
+  <header class="hub-header">
+    <div class="header-left">
+      <div class="brand-logo-container">
+        <!-- Mercedes Three-Point Star Icon -->
+        <svg class="brand-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 2v10l-8.66 5" />
+          <path d="M12 12l8.66 5" />
+        </svg>
+        <div class="brand-titles">
+          <div class="brand-title">MERCEDES-BENZ CENTRAL WARRANTY GATEWAY</div>
+          <div class="brand-subtitle">ASP ENTERPRISE WARRANTY INTELLIGENCE // DEALER CODE: #MB-7492</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="telemetry-pill">
+        <span class="pulse-dot"></span>
+        <span class="telemetry-label">XENTRY NET:</span>
+        <span class="telemetry-val text-emerald-400">ONLINE [SYNC 99.8%]</span>
+      </div>
+      <div class="telemetry-pill">
+        <span class="telemetry-label">WIS SPEC:</span>
+        <span class="telemetry-val text-cyan-400">2026.08 REL</span>
+      </div>
+      <div class="telemetry-pill">
+        <span class="telemetry-label">VMI STATUS:</span>
+        <span class="telemetry-val text-emerald-400">CONNECTED</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="clock-display" id="hubLiveClock">--:--:-- UTC</div>
+      <div class="user-badge">
+        <div class="avatar">AM</div>
+        <div class="user-info">
+          <span class="user-name">Amanda M.</span>
+          <span class="user-role">Warranty Director</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="hub-layout">
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="hub-sidebar" id="hubSidebar">
+      <div class="sidebar-section-title">COMMAND VIEWS</div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="view-dashboard" id="nav-dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect width="7" height="9" x="3" y="3" rx="1"/>
+            <rect width="7" height="5" x="14" y="3" rx="1"/>
+            <rect width="7" height="9" x="14" y="12" rx="1"/>
+            <rect width="7" height="5" x="3" y="16" rx="1"/>
+          </svg>
+          <span class="nav-text">Executive Dashboard</span>
+          <span class="badge-status">LIVE</span>
+        </button>
+
+        <button class="nav-item" data-view="view-garage" id="nav-garage">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C1.4 11.2 1 12 1 13v3c0 .6.4 1 1 1h2"/>
+            <circle cx="7" cy="17" r="2"/>
+            <path d="M9 17h6"/>
+            <circle cx="17" cy="17" r="2"/>
+          </svg>
+          <span class="nav-text">Garage &amp; Bay Terminal</span>
+          <span class="badge-count">4 Bays</span>
+        </button>
+
+        <button class="nav-item" data-view="view-auditor" id="nav-auditor">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          <span class="nav-text">AI Audit &amp; Appeal Engine</span>
+          <span class="badge-accent">WIS-AI</span>
+        </button>
+
+        <button class="nav-item" data-view="view-schedule" id="nav-schedule">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M16 13H8"/>
+            <path d="M16 17H8"/>
+            <path d="M10 9H8"/>
+          </svg>
+          <span class="nav-text">Trans-Transparency Hub</span>
+          <span class="badge-warning">RECON</span>
+        </button>
+
+        <button class="nav-item" data-view="view-videohud" id="nav-videohud">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m22 8-6 4 6 4V8Z"/>
+            <rect width="14" height="12" x="2" y="6" rx="2"/>
+          </svg>
+          <span class="nav-text">Video HUD &amp; Telemetry</span>
+          <span class="badge-red">CAM LIVE</span>
+        </button>
+
+        <button class="nav-item" data-view="view-dispatch" id="nav-dispatch">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 6 2 18 2 18 9"/>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+            <rect width="12" height="8" x="6" y="14"/>
+          </svg>
+          <span class="nav-text">Dispatch &amp; PDF Report</span>
+          <span class="badge-cyan">PRINT</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="system-health">
+          <div class="health-header">
+            <span>AUDIT READINESS</span>
+            <span class="text-emerald-400 font-mono font-bold">96.4%</span>
+          </div>
+          <div class="health-bar-bg">
+            <div class="health-bar-fill" style="width: 96.4%"></div>
+          </div>
+          <div class="health-meta">Zero Comeback Policy Enforced</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN VIEW AREA -->
+    <main class="hub-main" id="hubMain">
+
+      <!-- ==================================================================== -->
+      <!-- VIEW 1: EXECUTIVE DASHBOARD -->
+      <!-- ==================================================================== -->
+      <section class="view-section active" id="view-dashboard">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Executive Warranty Dashboard</h1>
+            <p class="view-desc">Central Mercedes-Benz dealership warranty KPI telemetry, short-pay avoidance &amp; recovery tracking.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-secondary" onclick="refreshDashboardMetrics()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+              <span>Refresh Metrics</span>
+            </button>
+            <button class="btn btn-primary" onclick="switchView('view-auditor')">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Audit New Claim</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI SUMMARY CARDS -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-box bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="kpi-content">
+              <div class="kpi-label">TOTAL SUBMITTED (MTD)</div>
+              <div class="kpi-value" id="kpi-submitted">$482,910</div>
+              <div class="kpi-subtext text-emerald-400 font-mono">▲ +14.2% vs prior mo.</div>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-box bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="kpi-content">
+              <div class="kpi-label">APPROVED &amp; PAID</div>
+              <div class="kpi-value" id="kpi-approved">$468,450</div>
+              <div class="kpi-subtext text-cyan-400 font-mono">97.0% Acceptance Rate</div>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-box bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            </div>
+            <div class="kpi-content">
+              <div class="kpi-label">VARIANCE &amp; UNDERPAY</div>
+              <div class="kpi-value" id="kpi-variance">$14,460</div>
+              <div class="kpi-subtext text-amber-400 font-mono">6 Claims in Reconciliation</div>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-box bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="kpi-content">
+              <div class="kpi-label">AI APPEAL RECOVERY</div>
+              <div class="kpi-value" id="kpi-recovered">$38,290</div>
+              <div class="kpi-subtext text-purple-400 font-mono">89.4% Appeal Win Rate</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHARTS ROW -->
+        <div class="charts-row">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h2 class="chart-title">Monthly Claim Volume &amp; Variance Trend</h2>
+                <p class="chart-subtitle">Gross submitted vs approved credits over last 6 months ($k)</p>
+              </div>
+              <div class="chart-legend">
+                <span class="legend-dot bg-cyan-400"></span><span class="legend-text">Submitted</span>
+                <span class="legend-dot bg-emerald-400"></span><span class="legend-text">Approved</span>
+              </div>
+            </div>
+            <div class="chart-body">
+              <canvas id="claimTrendChart" height="230"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <div>
+                <h2 class="chart-title">Error Distribution by Category</h2>
+                <p class="chart-subtitle">Root cause analysis of documentation flags</p>
+              </div>
+              <span class="tag-status">WIS 3C Matrix</span>
+            </div>
+            <div class="chart-body flex-center">
+              <canvas id="categoryDonutChart" height="230"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIVE AUDIT FEED & RECENT HIGH-RISK CLAIMS -->
+        <div class="feed-card">
+          <div class="feed-header">
+            <div class="flex items-center gap-2">
+              <span class="pulse-dot"></span>
+              <h2 class="feed-title">Active Repair Orders Under Compliance Inspection</h2>
+            </div>
+            <span class="font-mono text-xs text-slate-400">Live DMS Feed</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="hub-table">
+              <thead>
+                <tr>
+                  <th>RO NUMBER</th>
+                  <th>MODEL / VIN</th>
+                  <th>PRIMARY TECHNICIAN</th>
+                  <th>SERVICE ADVISOR</th>
+                  <th>CONCERN / PART</th>
+                  <th>STATUS</th>
+                  <th>VARIANCE</th>
+                  <th>ACTION</th>
+                </tr>
+              </thead>
+              <tbody id="dashboardClaimsTableBody">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================== -->
+      <!-- VIEW 2: GARAGE & BAY TERMINAL -->
+      <!-- ==================================================================== -->
+      <section class="view-section" id="view-garage">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Workshop Garage &amp; Bay Terminals</h1>
+            <p class="view-desc">Live bay occupancy, technician assignment, diagnostic tool hooks &amp; active repair telemetry.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-secondary" onclick="toggleAllBayStatus()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              <span>Refresh Sensor Stream</span>
+            </button>
+            <button class="btn btn-primary" onclick="switchView('view-videohud')">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2"/></svg>
+              <span>Open Bay Video HUD</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- BAY STATUS FILTER TABS -->
+        <div class="tab-pill-group">
+          <button class="tab-pill active" onclick="filterBays('ALL', this)">All Bays (4)</button>
+          <button class="tab-pill" onclick="filterBays('ACTIVE', this)">Active Repairs (3)</button>
+          <button class="tab-pill" onclick="filterBays('DIAG', this)">Diagnostic / SCN (1)</button>
+          <button class="tab-pill" onclick="filterBays('CALIBRATION', this)">Alignment Rack (1)</button>
+        </div>
+
+        <!-- BAY TERMINAL CARDS GRID -->
+        <div class="bays-grid" id="baysGrid">
+          <!-- Populated via JS with Bay 01 to Bay 04 -->
+        </div>
+
+        <!-- TANK & FLUID LEVEL GAUGE PANEL -->
+        <div class="tanks-card">
+          <div class="tanks-header">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              <h2 class="font-bold text-slate-100 uppercase tracking-wider text-sm">Bulk Fluid &amp; Tank Telemetry (MB 236.17 / MB 325.0 Spec)</h2>
+            </div>
+            <span class="font-mono text-xs text-emerald-400 font-bold">ALL VALVES SECURE</span>
+          </div>
+
+          <div class="tanks-gauges-grid" id="tanksGaugesGrid">
+            <!-- Fluid gauges rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================== -->
+      <!-- VIEW 3: AI AUDIT ENGINE & APPEAL CENTER -->
+      <!-- ==================================================================== -->
+      <section class="view-section" id="view-auditor">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">WIS &amp; 3C AI Claim Auditor</h1>
+            <p class="view-desc">Automated factory warranty compliance scoring, one-time hardware check, and instant appeals generator.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-secondary" onclick="exportCurrentAuditReport()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              <span>Export Audit JSON</span>
+            </button>
+            <button class="btn btn-primary" onclick="reEvaluateClaim()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              <span>Run WIS Audit Analysis</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CLAIM SELECTOR BAR -->
+        <div class="claim-selector-card">
+          <div class="selector-field">
+            <label class="field-label">SELECT REPAIR ORDER TO AUDIT:</label>
+            <select class="form-select" id="claimSelector" onchange="onClaimSelected(this.value)">
+              <option value="RO-88301">RO-88301 • 2024 S580 4MATIC (9G-Tronic Valve Body / Pan Stretch Screws)</option>
+              <option value="RO-88412">RO-88412 • 2023 GLE 450 (Front Lower Control Arm Hydro-Bushings)</option>
+              <option value="RO-88509">RO-88509 • 2024 E450 All-Terrain (Direct Fuel Injectors &amp; Copper Seals)</option>
+              <option value="RO-88620">RO-88620 • 2023 AMG GT 53 (AIRMATIC Compressor &amp; Romess Alignment)</option>
+              <option value="RO-88734">RO-88734 • 2025 GLC 300 4MATIC (MBUX NTG7 Central Gateway Flash)</option>
+            </select>
+          </div>
+          <div class="claim-meta-strip" id="claimMetaStrip">
+            <!-- Meta tags rendered via JS -->
+          </div>
+        </div>
+
+        <!-- SPLIT AUDIT WORKBENCH -->
+        <div class="audit-workbench">
+          <!-- LEFT: 3C STORY & DIAGNOSTIC DETAILS -->
+          <div class="audit-left-col">
+            <div class="card-panel">
+              <div class="panel-header">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                  <h3 class="panel-title">Mercedes-Benz 3C Standard Story (WIS Compliant)</h3>
+                </div>
+                <button class="btn-icon" onclick="copyStoryText()" title="Copy Formatted 3C Story">
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+              </div>
+
+              <div class="story-blocks">
+                <div class="story-block">
+                  <div class="story-label text-cyan-400">1. COMPLAINT (Customer Concern &amp; Road Verification)</div>
+                  <div class="story-text" id="auditComplaintText">Loading...</div>
+                </div>
+
+                <div class="story-block">
+                  <div class="story-label text-amber-400">2. CAUSE (XENTRY Quick Test &amp; WIS Guided Test Tree)</div>
+                  <div class="story-text" id="auditCauseText">Loading...</div>
+                </div>
+
+                <div class="story-block">
+                  <div class="story-label text-emerald-400">3. CORRECTION (Part Replacement, Stretch Fasteners &amp; Road Test)</div>
+                  <div class="story-text" id="auditCorrectionText">Loading...</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ONE TIME USE FASTENERS & WIS CHECKS -->
+            <div class="card-panel">
+              <div class="panel-header">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  <h3 class="panel-title">Mandatory One-Time-Use Hardware &amp; Fluid Audit</h3>
+                </div>
+                <span class="tag-status" id="hardwareStatusTag">COMPLIANT</span>
+              </div>
+              <div class="hardware-list" id="hardwareList">
+                <!-- Rendered via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: SCORE RING, DETECTED ISSUES & APPEAL GENERATOR -->
+          <div class="audit-right-col">
+            <!-- SCORE CARD -->
+            <div class="score-card">
+              <div class="score-ring-container">
+                <svg class="score-svg" viewBox="0 0 100 100">
+                  <circle class="score-circle-bg" cx="50" cy="50" r="42" />
+                  <circle class="score-circle-fill" id="auditScoreCircle" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="30" />
+                </svg>
+                <div class="score-text-overlay">
+                  <span class="score-number" id="auditScoreNum">94</span>
+                  <span class="score-denom">/ 100</span>
+                </div>
+              </div>
+
+              <div class="score-meta">
+                <div class="score-grade" id="auditGrade">WIS GRADE: A (READY TO SUBMIT)</div>
+                <p class="score-desc" id="auditVerdict">Claim adheres strictly to Daimler AG warranty policies with verified diagnostic labor trees and required stretch fastener part numbers.</p>
+                <div class="score-badges" id="auditBadges">
+                  <span class="badge-status bg-emerald-950 text-emerald-300 border border-emerald-800">Quick Test Attached</span>
+                  <span class="badge-status bg-cyan-950 text-cyan-300 border border-cyan-800">Punch Aligned</span>
+                  <span class="badge-status bg-purple-950 text-purple-300 border border-purple-800">WIS AR Ref</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- APPEAL LETTER GENERATOR -->
+            <div class="card-panel">
+              <div class="panel-header">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9 22 2Z"/></svg>
+                  <h3 class="panel-title">Automated Mercedes Warranty Appeal Letter</h3>
+                </div>
+                <button class="btn btn-xs btn-secondary" onclick="copyAppealLetter()">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                  <span>Copy Letter</span>
+                </button>
+              </div>
+
+              <div class="appeal-letter-box font-mono" id="appealLetterContent">
+                <!-- Generated appeal letter text -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================== -->
+      <!-- VIEW 4: MASTER WARRANTY SCHEDULE & TRANS-TRANSPARENCY -->
+      <!-- ==================================================================== -->
+      <section class="view-section" id="view-schedule">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Trans-Transparency &amp; DMS Reconciliation</h1>
+            <p class="view-desc">Live reconciliation engine matching DMS C-Files against Mercedes-Benz Central Credit Remittances.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-secondary" onclick="triggerDmsSync()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              <span>Upload DMS C-File</span>
+            </button>
+            <button class="btn btn-primary" onclick="runAutoReconcile()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              <span>Auto-Reconcile Credits</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- RECONCILIATION STATS STRIP -->
+        <div class="reconcile-stats-grid">
+          <div class="recon-stat">
+            <span class="recon-label">TOTAL DMS CLAIMS:</span>
+            <span class="recon-val font-mono">148 Claims</span>
+          </div>
+          <div class="recon-stat">
+            <span class="recon-label">MATCHED &amp; PAID (100%):</span>
+            <span class="recon-val font-mono text-emerald-400">142 Claims ($468,450)</span>
+          </div>
+          <div class="recon-stat">
+            <span class="recon-label">VARIANCE / SHORT-PAY:</span>
+            <span class="recon-val font-mono text-amber-400">6 Claims ($14,460)</span>
+          </div>
+          <div class="recon-stat">
+            <span class="recon-label">UNMATCHED REMITTANCES:</span>
+            <span class="recon-val font-mono text-cyan-400">0 Items</span>
+          </div>
+        </div>
+
+        <!-- RECONCILIATION FILTER & SEARCH -->
+        <div class="filter-search-bar">
+          <div class="search-input-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" class="search-input" id="reconSearchInput" placeholder="Search by RO #, VIN, Technician or Part..." oninput="filterReconciliationTable()" />
+          </div>
+          <div class="filter-pills">
+            <button class="filter-pill active" onclick="setReconFilter('ALL', this)">All (148)</button>
+            <button class="filter-pill" onclick="setReconFilter('VARIANCE', this)">Variance (6)</button>
+            <button class="filter-pill" onclick="setReconFilter('PAID', this)">Paid in Full (142)</button>
+          </div>
+        </div>
+
+        <!-- RECONCILIATION DATA GRID -->
+        <div class="feed-card">
+          <div class="table-responsive">
+            <table class="hub-table">
+              <thead>
+                <tr>
+                  <th>RO NUMBER</th>
+                  <th>CLAIM DATE</th>
+                  <th>MODEL / VIN</th>
+                  <th>TECHNICIAN</th>
+                  <th>DMS SUBMITTED</th>
+                  <th>MB CREDIT PAID</th>
+                  <th>VARIANCE</th>
+                  <th>VARIANCE REASON / AUDIT NOTE</th>
+                  <th>STATUS</th>
+                </tr>
+              </thead>
+              <tbody id="reconciliationTableBody">
+                <!-- Rendered via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================== -->
+      <!-- VIEW 5: LIVE VIDEO HUD & WORKSHOP TELEMETRY -->
+      <!-- ==================================================================== -->
+      <section class="view-section" id="view-videohud">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Workshop Video HUD &amp; AI Telemetry Stream</h1>
+            <p class="view-desc">Optical diagnostic inspection, live thermal overlay, and automated procedure time-indexing.</p>
+          </div>
+          <div class="view-actions">
+            <div class="hud-controls-group">
+              <button class="btn btn-secondary btn-sm" id="btnThermalToggle" onclick="toggleThermalMode()">
+                <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
+                <span id="thermalBtnLabel">Thermal Vision: OFF</span>
+              </button>
+              <button class="btn btn-secondary btn-sm" id="btnTelemetryToggle" onclick="toggleAiTelemetry()">
+                <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+                <span id="telemetryBtnLabel">AI Bounding Boxes: ON</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIDEO HUD SCREEN & CAMERA WORKSPACE -->
+        <div class="video-hud-grid">
+          <!-- MAIN HUD VIEWFINDER -->
+          <div class="hud-viewfinder-container">
+            <div class="hud-frame" id="hudFrame">
+              <!-- Grid Reticle Overlay -->
+              <div class="hud-reticle-overlay"></div>
+              
+              <!-- Top Left Camera Identifier -->
+              <div class="hud-corner-tl">
+                <span class="hud-live-tag">● REC / LIVE</span>
+                <span class="hud-cam-id" id="hudActiveCamLabel">CAM 01: DIAGNOSTIC LIFT A</span>
+              </div>
+
+              <!-- Top Right Telemetry -->
+              <div class="hud-corner-tr">
+                <span class="hud-badge font-mono" id="hudFpsCounter">60.0 FPS // 4K UHD</span>
+                <span class="hud-badge font-mono text-cyan-400">SCN CODING: SYNCED</span>
+              </div>
+
+              <!-- Canvas Simulation Video Display -->
+              <div class="hud-canvas-wrap">
+                <canvas id="hudCanvas" width="960" height="540"></canvas>
+                <!-- AI Bounding Box Overlays -->
+                <div class="hud-ai-box" id="aiBox1" style="top: 25%; left: 35%; width: 28%; height: 45%;">
+                  <div class="ai-box-tag text-cyan-300">
+                    <span>9G-Tronic 725 Valve Body</span>
+                    <span class="font-mono">99.4% CONF</span>
+                  </div>
+                  <div class="ai-box-corner tl"></div>
+                  <div class="ai-box-corner tr"></div>
+                  <div class="ai-box-corner bl"></div>
+                  <div class="ai-box-corner br"></div>
+                </div>
+
+                <div class="hud-ai-box" id="aiBox2" style="top: 68%; left: 38%; width: 22%; height: 20%;">
+                  <div class="ai-box-tag text-emerald-300">
+                    <span>Torque-to-Yield Fastener Yield Check</span>
+                    <span class="font-mono">TORQUED OK</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bottom Bar HUD Info -->
+              <div class="hud-corner-bl">
+                <div class="hud-timer-badge">
+                  <span class="timer-icon">⏱</span>
+                  <span class="timer-text" id="hudVideoElapsedTimer">00:00 / 02:15</span>
+                </div>
+                <div class="hud-vin-badge font-mono">
+                  VIN: WD1702951A8271049 (2024 S580 4MATIC)
+                </div>
+              </div>
+
+              <div class="hud-corner-br">
+                <div class="hud-mode-pill font-mono" id="hudModePill">OPTICAL SPECTRUM</div>
+              </div>
+            </div>
+
+            <!-- HUD CAMERA SELECTOR TABS -->
+            <div class="camera-selector-strip">
+              <button class="cam-btn active" onclick="switchHudCamera('CAM_01', 'CAM 01: DIAGNOSTIC LIFT A', this)">
+                <span class="cam-dot"></span>
+                <span>CAM 01 (Bay 1 Lift)</span>
+              </button>
+              <button class="cam-btn" onclick="switchHudCamera('CAM_02', 'CAM 02: ROMESS ALIGNMENT RACK', this)">
+                <span class="cam-dot"></span>
+                <span>CAM 02 (Bay 3 Romess)</span>
+              </button>
+              <button class="cam-btn" onclick="switchHudCamera('CAM_03', 'CAM 03: UNDERCARRIAGE SCANNER', this)">
+                <span class="cam-dot"></span>
+                <span>CAM 03 (Under-chassis)</span>
+              </button>
+              <button class="cam-btn" onclick="switchHudCamera('CAM_04', 'CAM 04: XENTRY SCN TERMINAL', this)">
+                <span class="cam-dot"></span>
+                <span>CAM 04 (Bay 4 SCN)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT: PROCEDURE TIMECODE INDEX -->
+          <div class="hud-sidebar-panel">
+            <div class="panel-header">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-cyan-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <h3 class="panel-title">WIS Procedure Timecode Index</h3>
+              </div>
+              <span class="tag-status">RO-88301</span>
+            </div>
+
+            <div class="timecode-list" id="timecodeList">
+              <div class="timecode-item" onclick="jumpToVideoTime('00:15', 'Initial XENTRY Quick Test Connection &amp; Voltage Stabilizer')">
+                <div class="tc-time font-mono text-cyan-400">00:15</div>
+                <div class="tc-info">
+                  <div class="tc-title">Midtronics Stabilizer &amp; Initial Quick Test</div>
+                  <div class="tc-desc">Verified 13.8V supply; retrieved DTC P0730.</div>
+                </div>
+              </div>
+
+              <div class="timecode-item" onclick="jumpToVideoTime('00:48', 'Transmission Oil Pan Drop &amp; Debris Inspection')">
+                <div class="tc-time font-mono text-cyan-400">00:48</div>
+                <div class="tc-info">
+                  <div class="tc-title">Pan Removal &amp; Fluid Inspection</div>
+                  <div class="tc-desc">Removed 10x aluminum screws; inspected magnets.</div>
+                </div>
+              </div>
+
+              <div class="timecode-item" onclick="jumpToVideoTime('01:22', 'Electrohydraulic Control Module (VGS) Installation')">
+                <div class="tc-time font-mono text-cyan-400">01:22</div>
+                <div class="tc-info">
+                  <div class="tc-title">New VGS Unit Installed (A7252703707)</div>
+                  <div class="tc-desc">Torqued to WIS AR27.10-P-7021 specification.</div>
+                </div>
+              </div>
+
+              <div class="timecode-item" onclick="jumpToVideoTime('01:54', 'New Aluminum Fasteners &amp; Torque-to-Yield Angle Sequence')">
+                <div class="tc-time font-mono text-cyan-400">01:54</div>
+                <div class="tc-info">
+                  <div class="tc-title">Fastener Torque-Angle Verification</div>
+                  <div class="tc-desc">All 10x one-time-use screws yielded to 4 Nm + 90°.</div>
+                </div>
+              </div>
+
+              <div class="timecode-item" onclick="jumpToVideoTime('02:10', 'Final SCN Coding &amp; Adaptation Drive')">
+                <div class="tc-time font-mono text-cyan-400">02:10</div>
+                <div class="tc-info">
+                  <div class="tc-title">SCN Flash &amp; Shift Adaptation</div>
+                  <div class="tc-desc">Adaptations completed in gears 1-9; zero active DTCs.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="timecode-footer">
+              <p class="text-xs text-slate-400">Clicking any timecode indices repositions playback timer and outputs telemetry toast.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================== -->
+      <!-- VIEW 6: DISPATCH & PDF REPORT CENTER -->
+      <!-- ==================================================================== -->
+      <section class="view-section" id="view-dispatch">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Warranty Dispatch &amp; Official Executive Reports</h1>
+            <p class="view-desc">Print-ready Mercedes-Benz official warranty repair order dispatch slips &amp; compliance certificates.</p>
+          </div>
+          <div class="view-actions">
+            <button class="btn btn-secondary" onclick="exportDispatchCsv()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+              <span>Export Dispatch Data</span>
+            </button>
+            <button class="btn btn-primary" onclick="openPrintDispatchWindow()">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+              <span>Print Official PDF / Slip</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- PRINTABLE DISPATCH SLIP PREVIEW -->
+        <div class="dispatch-slip-preview" id="dispatchSlipPreview">
+          <div class="slip-watermark">MERCEDES-BENZ WARRANTY</div>
+          
+          <div class="slip-header">
+            <div class="slip-logo-block">
+              <!-- Mercedes Star -->
+              <svg class="w-12 h-12 text-slate-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2v10l-8.66 5" />
+                <path d="M12 12l8.66 5" />
+              </svg>
+              <div>
+                <div class="text-lg font-bold tracking-widest text-slate-100 uppercase font-serif">MERCEDES-BENZ OF ASPEN</div>
+                <div class="text-xs text-slate-400 font-mono">AUTHORIZED MERCEDES-BENZ SERVICE // DEALER #7492</div>
+              </div>
+            </div>
+
+            <div class="slip-meta-block">
+              <div class="slip-meta-row">
+                <span class="slip-meta-lbl">DISPATCH SLIP #:</span>
+                <span class="slip-meta-val font-mono font-bold text-cyan-400" id="dspSlipNumber">DSP-2026-88301</span>
+              </div>
+              <div class="slip-meta-row">
+                <span class="slip-meta-lbl">DATE / TIME:</span>
+                <span class="slip-meta-val font-mono" id="dspSlipDate">2026-08-29 15:45 UTC</span>
+              </div>
+              <div class="slip-meta-row">
+                <span class="slip-meta-lbl">CLAIM TYPE:</span>
+                <span class="slip-meta-val font-bold text-emerald-400">WARRANTY (01 - NVLW)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="slip-divider"></div>
+
+          <!-- VEHICLE & CLAIM CORE GRID -->
+          <div class="slip-details-grid">
+            <div class="slip-col">
+              <div class="slip-section-title">VEHICLE &amp; INTAKE TELEMETRY</div>
+              <div class="slip-field">
+                <span class="field-k">MODEL:</span>
+                <span class="field-v font-bold" id="dspModel">2024 Mercedes-Benz S580 4MATIC Sedan</span>
+              </div>
+              <div class="slip-field">
+                <span class="field-k">VIN:</span>
+                <span class="field-v font-mono" id="dspVin">WD1702951A8271049</span>
+              </div>
+              <div class="slip-field">
+                <span class="field-k">ODOMETER:</span>
+                <span class="field-v font-mono" id="dspMileage">14,280 MILES</span>
+              </div>
+              <div class="slip-field">
+                <span class="field-k">REPAIR ORDER:</span>
+                <span class="field-v font-mono font-bold text-cyan-400" id="dspRo">RO-88301</span>
+              </div>
+            </div>
+
+            <div class="slip-col">
+              <div class="slip-section-title">SERVICE PERSONNEL &amp; BAY</div>
+              <div class="slip-field">
+                <span class="field-k">PRIMARY TECH:</span>
+                <span class="field-v font-bold" id="dspTech">Marcus Vance (#1042 - Master Certified)</span>
+              </div>
+              <div class="slip-field">
+                <span class="field-k">SERVICE ADVISOR:</span>
+                <span class="field-v" id="dspAdvisor">Sarah Lin (#8821)</span>
+              </div>
+              <div class="slip-field">
+                <span class="field-k">WARRANTY FOREMAN:</span>
+                <span class="field-v" id="dspForeman">D. Henderson (Foreman Signature Verified)</span>
+              </div>
+              <div class="slip-field">
+                <span class="field-k">ASSIGNED BAY:</span>
+                <span class="field-v font-mono text-emerald-400" id="dspBay">BAY 01 (Heavy Diagnostic Lift)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="slip-divider"></div>
+
+          <!-- 3C FACTORY STORY SUMMARY -->
+          <div class="slip-story-block">
+            <div class="slip-section-title">3C TECHNICAL WARRANTY SPECIFICATION</div>
+            <div class="slip-3c-row">
+              <span class="slip-3c-tag text-cyan-400">COMPLAINT:</span>
+              <p class="slip-3c-body" id="dspComplaint">Customer states Check Engine Light is illuminated; transmission slips intermittently and shifts harshly between 2nd and 3rd gear.</p>
+            </div>
+            <div class="slip-3c-row">
+              <span class="slip-3c-tag text-amber-400">CAUSE:</span>
+              <p class="slip-3c-body" id="dspCause">Connected XENTRY with Midtronics battery maintainer. Retrieved fault code P073000 (Incorrect Gear Ratio). Followed WIS guided test tree. Found internal pressure solenoid sticking in electrohydraulic valve body.</p>
+            </div>
+            <div class="slip-3c-row">
+              <span class="slip-3c-tag text-emerald-400">CORRECTION:</span>
+              <p class="slip-3c-body" id="dspCorrection">Replaced electrohydraulic control unit (VGS) per WIS AR27.10-P-7021. Installed new oil pan gasket and 10x one-time aluminum stretch bolts (tightened to 4 Nm + 90°). Refilled 7.5L MB 236.17 ATF. Executed SCN coding and completed adaptation road test.</p>
+            </div>
+          </div>
+
+          <div class="slip-divider"></div>
+
+          <!-- PARTS & LABOR BREAKDOWN -->
+          <div class="slip-table-wrap">
+            <div class="slip-section-title">APPROVED PARTS &amp; LABOR LINES</div>
+            <table class="slip-table">
+              <thead>
+                <tr>
+                  <th>PART # / OP CODE</th>
+                  <th>DESCRIPTION</th>
+                  <th>QTY</th>
+                  <th>UNIT PRICE</th>
+                  <th>CLAIMED TOTAL</th>
+                </tr>
+              </thead>
+              <tbody id="dspPartsTableBody">
+                <tr>
+                  <td class="font-mono">A7252703707</td>
+                  <td>Electrohydraulic Controller (VGS)</td>
+                  <td class="font-mono">1</td>
+                  <td class="font-mono">$1,850.00</td>
+                  <td class="font-mono font-bold">$1,850.00</td>
+                </tr>
+                <tr>
+                  <td class="font-mono">A0029908303</td>
+                  <td>Torque-to-Yield Pan Fasteners (M6x25)</td>
+                  <td class="font-mono">10</td>
+                  <td class="font-mono">$3.40</td>
+                  <td class="font-mono font-bold">$34.00</td>
+                </tr>
+                <tr>
+                  <td class="font-mono">A0029890602</td>
+                  <td>MB 236.17 ATF Fluid (1 Liter Bottle)</td>
+                  <td class="font-mono">8</td>
+                  <td class="font-mono">$24.00</td>
+                  <td class="font-mono font-bold">$192.00</td>
+                </tr>
+                <tr>
+                  <td class="font-mono">Op 27-2400</td>
+                  <td>WIS Labor: R&amp;R Transmission Control Unit</td>
+                  <td class="font-mono">3.8 hrs</td>
+                  <td class="font-mono">$185.00</td>
+                  <td class="font-mono font-bold">$703.00</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="4" class="text-right font-bold">TOTAL CLAIM DISPATCH VALUE:</td>
+                  <td class="font-mono font-bold text-emerald-400 text-base" id="dspTotalVal">$2,779.00</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <!-- SIGNATURE STAMPS -->
+          <div class="slip-signatures">
+            <div class="sig-box">
+              <div class="sig-line"></div>
+              <div class="sig-title">Certified Master Technician Signature</div>
+              <div class="sig-sub font-mono">Marcus Vance (#1042)</div>
+            </div>
+            <div class="sig-box">
+              <div class="sig-line"></div>
+              <div class="sig-title">Shop Foreman Quality Verification</div>
+              <div class="sig-sub font-mono">D. Henderson (#0419)</div>
+            </div>
+            <div class="sig-box">
+              <div class="sig-line"></div>
+              <div class="sig-title">Warranty Administrator Approval</div>
+              <div class="sig-sub font-mono">Amanda M. (Director)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- APP LOGIC -->
+  <script src="app.js"></script>
+</body>
+</html>

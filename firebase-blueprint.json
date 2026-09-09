@@ -1,0 +1,86 @@
+{
+  "entities": {
+    "ErrorRecord": {
+      "title": "Error Record",
+      "description": "A record of an error.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "category": { "type": "string" },
+        "date": { "type": "string" },
+        "roNumber": { "type": "string" },
+        "vin": { "type": "string" },
+        "employeeName": { "type": "string" },
+        "errorDescription": { "type": "string" },
+        "severity": { "type": "string" },
+        "severityColor": { "type": "string" },
+        "notes": { "type": "string" },
+        "manager": { "type": "string" },
+        "shopForeman": { "type": "string" },
+        "serviceAdvisor": { "type": "string" },
+        "denialDate": { "type": "string" },
+        "chargebackAmount": { "type": "number" },
+        "recoveryAmount": { "type": "number" },
+        "appealEligible": { "type": "boolean" },
+        "attachments": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string" },
+        "userId": { "type": "string", "description": "The ID of the user who created the record" }
+      },
+      "required": ["id", "category", "date", "roNumber", "vin", "employeeName", "errorDescription", "severity", "severityColor", "manager", "createdAt", "userId"]
+    },
+    "ErrorType": {
+      "title": "Error Type",
+      "description": "Definition of an error type.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "severity": { "type": "string" },
+        "severityColor": { "type": "string" },
+        "appealable": { "type": "boolean" },
+        "userId": { "type": "string", "description": "The ID of the user who created the error type" }
+      },
+      "required": ["id", "category", "description", "severity", "severityColor", "appealable", "userId"]
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "An employee.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "userId": { "type": "string", "description": "The ID of the user who created the employee" }
+      },
+      "required": ["id", "name", "role", "userId"]
+    },
+    "DashboardStats": {
+      "title": "Dashboard Stats",
+      "description": "Aggregated statistics for the dashboard.",
+      "type": "object",
+      "properties": {
+        "totalRecords": { "type": "number", "description": "The total number of records" }
+      },
+      "required": ["totalRecords"]
+    }
+  },
+  "firestore": {
+    "records/{recordId}": {
+      "schema": { "$ref": "#/entities/ErrorRecord" },
+      "description": "User error records"
+    },
+    "errorTypes/{errorTypeId}": {
+      "schema": { "$ref": "#/entities/ErrorType" },
+      "description": "User error types"
+    },
+    "employees/{employeeId}": {
+      "schema": { "$ref": "#/entities/Employee" },
+      "description": "User employees"
+    },
+    "stats/{statsId}": {
+      "schema": { "$ref": "#/entities/DashboardStats" },
+      "description": "Central aggregated stats"
+    }
+  }
+}
